@@ -1,5 +1,3 @@
-#Soft Max Classifier for MNIST
-
 import tensorflow as tf
 tf.set_random_seed(777)
 
@@ -11,10 +9,10 @@ X = tf.placeholder(tf.float32, shape=[None, 784])
 Y = tf.placeholder(tf.float32, shape=[None, np_classes])
 W = tf.Variable(tf.random_normal([784,np_classes]), name='weight')
 b = tf.Variable(tf.random_normal([np_classes]), name='bias')
-hypothesis = tf.nn.softmax(tf.matmul(X,W) + b)
+hypothesis = tf.matmul(X,W) + b
 
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=hypothesis, labels=Y))
-optimizer = tf.train.AdamOptimizer(learning_rate=0.001).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.1).minimize(cost)
 
 traning_epoches = 15
 batch_size = 100
