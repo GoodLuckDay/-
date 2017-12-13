@@ -47,5 +47,6 @@ with tf.Session() as sess:
 
     is_correction = tf.equal(prediction, target)
     accuracy = tf.reduce_mean(tf.cast(is_correction, tf.float32))
+
     print('정확도: %.2f' % sess.run(accuracy * 100, feed_dict={X: x_data, Y: y_data}))
 
