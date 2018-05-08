@@ -37,7 +37,8 @@ for doc in doc_set:
     print(dictionary)
 
     ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=3, id2word = dictionary, passes=20)
-    print(ldamodel.print_topics(num_topics=2, num_words=4))
+    print(ldamodel)
+    print(ldamodel.print_topics(num_topics=3, num_words=5))
     print("------------------------")
 
 
