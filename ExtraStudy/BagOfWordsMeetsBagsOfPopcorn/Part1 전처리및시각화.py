@@ -4,6 +4,8 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from multiprocessing import Pool
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
 import numpy as np
 
 #Pandas를 이용하여 csv 읽기 header는 column의 위치 delimiter는 각 필드를 파싱 quoting은 큰따음표를 무시하는 역활을 한다.
@@ -45,7 +47,7 @@ def review_to_words( raw_review ):
 
     return(' '.join(stemming_words))
 
-# train['review_clean'] = train['review'].apply(review_to_words)
+train['review_clean'] = train['review'].apply(review_to_words)
 
 def _apply_df(args):
     df, func, kwargs = args
@@ -58,5 +60,14 @@ def _apply_by_multiprocessing(df, func, **kwargs):
     pool.close()
     return pd.concat(list(result))
 
-time_clean_train_reviews = _apply_by_multiprocessing(train['review'], review_to_words, workers=4)
-print(time_clean_train_reviews)
+def displayWordCloud(data = None, backgroundColor = 'white', width=800, height = 600):
+    wordcloud = WordCloud(stopwords=STOPWORDS, background_color=backgroundColor,
+                          width=width, height=height).generate(data)
+    plt.figure(figsize=(15, 10))
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.show()
+
+# clean_train_reviews = _apply_by_multiprocessing(train['review'], review_to_words, workers=4)
+print(train['review_clean'])
+# displayWordCloud(' '.join(clean_train_reviews))
